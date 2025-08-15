@@ -1,25 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>YouTube Downloader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body style="font-family: Arial; text-align: center; margin-top: 50px;">
-  <h2>YouTube Video Downloader</h2>
-  <input id="videoURL" type="text" placeholder="Enter YouTube URL" 
-         style="padding: 10px; width: 300px;" />
-  <button onclick="downloadVideo()" style="padding: 10px 15px; background: red; color: white; border: none;">
-    Download
-  </button>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+
+  <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-4">🎥 YouTube Downloader</h1>
+
+    <label class="block mb-2 text-sm font-medium">YouTube URL</label>
+    <input id="videoURL" type="text" placeholder="Paste YouTube link"
+      class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500 mb-4" />
+
+    <label class="block mb-2 text-sm font-medium">Select Quality</label>
+    <select id="quality" class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500 mb-4">
+      <option value="360p" selected>360p (default)</option>
+      <option value="720p">720p HD</option>
+      <option value="1080p">1080p Full HD</option>
+      <option value="highest">Highest Available</option>
+    </select>
+
+    <button onclick="downloadVideo()" 
+      class="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold">
+      ⬇️ Download
+    </button>
+  </div>
 
   <script>
-    function downloadVideo() {
-      const url = document.getElementById("videoURL").value.trim();
-      if (!url) {
-        alert("Please enter a YouTube URL");
+    async function downloadVideo() {
+      const videoURL = document.getElementById("videoURL").value.trim();
+      const quality = document.getElementById("quality").value;
+      
+      if (!videoURL) {
+        alert("Please paste a YouTube URL.");
         return;
       }
-      window.location.href = `https://youtube-downloader-o9up.onrender.com/download?url=${encodeURIComponent(url)}`;
+
+      const apiURL = `https://youtube-downloader-o9up.onrender.com/download?url=${encodeURIComponent(videoURL)}&quality=${quality}`;
+      
+      window.location.href = apiURL; // Direct download
     }
   </script>
+
 </body>
 </html>
